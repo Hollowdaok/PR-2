@@ -10,12 +10,30 @@ def main():
     student = Student("Didylivskyi Denys", "PD-41")
     
     course_list = ["Algorithms", "Databases", "Networks", "Python", "Java"]
-    score_list = [78, 88, 92, 85, 96]
-    actual = ActualRecord(course_list, score_list)
+    score_dict = {
+        "Algorithms": [78, 80],
+        "Databases": [88, 90],
+        "Networks": [92, 94],
+        "Python": [85, 87],
+        "Java": [96, 98]
+    }
+    actual = ActualRecord(course_list, score_dict)
     
-    target_scores = [90, 95, 98, 92, 100]
-    target_mean_value = 98
-    target = TargetRecord(course_list, target_scores, target_mean_value)
+    target_score_dict = {
+        "Algorithms": [90, 92],
+        "Databases": [95, 96],
+        "Networks": [98, 99],
+        "Python": [92, 94],
+        "Java": [100, 100]
+    }
+    target_means = {
+        "Algorithms": 91,
+        "Databases": 95.5,
+        "Networks": 98.5,
+        "Python": 93,
+        "Java": 100
+    }
+    target = TargetRecord(course_list, target_score_dict, target_means)
     
     info = StudentInfo(student, actual, target)
     data_dictionary = info.convert_to_dictionary()

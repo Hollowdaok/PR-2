@@ -15,12 +15,12 @@ class StudentInfo:
             "actual_record": {
                 "courses": self.__actual_record.retrieve_courses(),
                 "scores": self.__actual_record.retrieve_scores(),
-                "mean": self.__actual_record.calculate_mean()
+                "mean_per_course": self.__actual_record.calculate_mean_per_course()
             },
             "target_record": {
                 "target_courses": self.__target_record.retrieve_courses(),
                 "target_scores": self.__target_record.retrieve_scores(),
-                "target_mean": self.__target_record.calculate_mean()
+                "mean_per_course": self.__target_record.calculate_mean_per_course()
             }
         }
         return result

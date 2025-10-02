@@ -13,27 +13,36 @@ class XmlWriter(FileWriter):
         
         actual_node = ET.SubElement(root, "actual_record")
         courses = content["actual_record"]["courses"]
-        scores = content["actual_record"]["scores"]
+        scores_dict = content["actual_record"]["scores"]
+        means = content["actual_record"]["mean_per_course"]
         
-        for course, score in zip(courses, scores):
+        for course in courses:
             course_node = ET.SubElement(actual_node, "course")
             course_node.set("title", course)
-            course_node.text = str(score)
-        
-        mean_node = ET.SubElement(actual_node, "mean")
-        mean_node.text = str(content["actual_record"]["mean"])
+            
+            scores_node = ET.SubElement(course_node, "scores")
+            for score in scores_dict[course]:
+                score_node = ET.SubElement(scores_node, "score")
+                score_node.text = str(score)
+            
+            mean_node = ET.SubElement(course_node, "mean")
+            mean_node.text = str(means[course])
         
         target_node = ET.SubElement(root, "target_record")
-        target_courses = content["target_record"]["target_courses"]
-        target_scores = content["target_record"]["target_scores"]
+        target_scores_dict = content["target_record"]["target_scores"]
+        target_means = content["target_record"]["mean_per_course"]
         
-        for course, score in zip(target_courses, target_scores):
+        for course in courses:
             course_node = ET.SubElement(target_node, "target_course")
             course_node.set("title", course)
-            course_node.text = str(score)
-        
-        target_mean_node = ET.SubElement(target_node, "target_mean")
-        target_mean_node.text = str(content["target_record"]["target_mean"])
+            
+            scores_node = ET.SubElement(course_node, "target_scores")
+            for score in target_scores_dict[course]:
+                score_node = ET.SubElement(scores_node, "score")
+                score_node.text = str(score)
+            
+            mean_node = ET.SubElement(course_node, "mean")
+            mean_node.text = str(target_means[course])
         
         xml_tree = ET.ElementTree(root)
         ET.indent(xml_tree, space="  ")

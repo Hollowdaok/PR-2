@@ -6,25 +6,23 @@ class CsvWriter(FileWriter):
         with open(path, "w", newline="", encoding="utf-8") as file:
             csv_writer = csv.writer(file, delimiter=',')
             
-            headers = ["Name", "Group", "Course", "Score", "Mean Score", "Target Course", "Target Score", "Target Mean"]
+            headers = ["Name", "Group", "Course", "Scores", "Mean Score", "Target Scores", "Target Mean"]
             csv_writer.writerow(headers)
             
             courses = content["actual_record"]["courses"]
-            scores = content["actual_record"]["scores"]
-            mean_value = content["actual_record"]["mean"]
-            target_courses = content["target_record"]["target_courses"]
-            target_scores = content["target_record"]["target_scores"]
-            target_mean = content["target_record"]["target_mean"]
+            scores_dict = content["actual_record"]["scores"]
+            means = content["actual_record"]["mean_per_course"]
+            target_scores_dict = content["target_record"]["target_scores"]
+            target_means = content["target_record"]["mean_per_course"]
             
-            for course, score, target_course, target_score in zip(courses, scores, target_courses, target_scores):
+            for course in courses:
                 row = [
                     content["name"],
                     content["group"],
                     course,
-                    score,
-                    mean_value,
-                    target_course,
-                    target_score,
-                    target_mean
+                    ";".join(map(str, scores_dict[course])),
+                    means[course],
+                    ";".join(map(str, target_scores_dict[course])),
+                    target_means[course]
                 ]
                 csv_writer.writerow(row)
